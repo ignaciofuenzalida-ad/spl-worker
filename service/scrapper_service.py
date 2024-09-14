@@ -15,7 +15,6 @@ class ScrapperService:
 
         self._user_data = []
         self._current_user = None
-        self._attempt = 0
 
     def start(self):
         # self._user_data = ["15006843-6"]  # test
@@ -23,23 +22,29 @@ class ScrapperService:
         while True:
             try:
                 if len(self._user_data) == 0:
-                    self._logger.info("Empty user data, fetching from spl-users")
+                    self._logger.info("Empty user data, fetching from spl-users.")
                     self._user_data = self._user_service.get_random_users()
+
+                    if len(self._user_data) == 0:
+                        self._logger.info("No users found from spl-users, waiting 10 seconds before continue.")
+                        time.sleep(10)
+                        continue
 
                 for run in self._user_data:
                     self._current_user = run
+
                     user_exist = self._sportlife_service.login(run)
                     if not user_exist:
                         self._user_service.notify_user_not_found(run)
                         continue
 
                     self._logger.info(
-                        "[%s] New user found, extracting information", run
+                        "[%s] New user found, extracting information.", run
                     )
                     user_information = self._build_information()
 
                     self._logger.info(
-                        "[%s] Success extraction, sending to spl-users", run
+                        "[%s] Success extraction, sending to spl-users.", run
                     )
                     self._user_service.send_user(run, user_information)
 
