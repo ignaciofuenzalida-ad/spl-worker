@@ -36,6 +36,7 @@ class ScrapperService:
                     user_exist = self._sportlife_service.login(run)
                     if not user_exist:
                         self._user_service.notify_user_not_found(run)
+                        self._logger.info("[%s] User not found.", run)
                         continue
 
                     self._logger.info(
