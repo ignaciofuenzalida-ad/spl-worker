@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+    spl-worker:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: spl-worker:latest
+        network_mode: host
+        deploy:
+            replicas: 6

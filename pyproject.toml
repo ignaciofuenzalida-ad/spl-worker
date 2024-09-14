@@ -1,0 +1,12 @@
+[project]
+name = "spl-worker"
+version = "0.1.0"
+description = "This worker is responsible for processing the data from the SPL."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "bs4>=0.0.2",
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.3",
+    "ruff>=0.6.4",
+]
