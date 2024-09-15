@@ -25,11 +25,6 @@ class ScrapperService:
                     self._logger.info("Empty user data, fetching from spl-users.")
                     self._user_data = self._user_service.get_random_users()
 
-                    if len(self._user_data) == 0:
-                        self._logger.info("No users found from spl-users, waiting 10 seconds before continue.")
-                        time.sleep(10)
-                        continue
-
                 for run in self._user_data:
                     self._current_user = run
 
