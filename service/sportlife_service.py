@@ -105,7 +105,10 @@ class SportlifeService:
         if bird_date:
             try:
                 parsed_date = datetime.strptime(bird_date, "%Y-%m-%d")
-                profile_data["birthDate"] = parsed_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+                if parsed_date.year >= 1000:
+                    profile_data["birthDate"] = parsed_date.strftime(
+                        "%Y-%m-%dT%H:%M:%SZ"
+                    )
             except ValueError:
                 None
 
