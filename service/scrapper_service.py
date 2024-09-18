@@ -17,13 +17,18 @@ class ScrapperService:
         self._current_user = None
 
     def start(self):
-        # self._user_data = ["15006843-6"]  # test
+        self._user_data = ["22141732-1"]  # test
 
         while True:
             try:
                 if len(self._user_data) == 0:
                     self._logger.info("Empty user data, fetching from spl-users.")
                     self._user_data = self._user_service.get_random_users()
+                if len(self._user_data) == 0:
+                    self._logger.info(
+                        "Empty user data from spl-users, waiting 5 seconds."
+                    )
+                    time.sleep(5)
 
                 for run in self._user_data[:]:
                     self._current_user = run
