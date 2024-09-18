@@ -25,13 +25,14 @@ class ScrapperService:
                     self._logger.info("Empty user data, fetching from spl-users.")
                     self._user_data = self._user_service.get_random_users()
 
-                for run in self._user_data:
+                for run in self._user_data[:]:
                     self._current_user = run
 
                     user_exist = self._sportlife_service.login(run)
                     if not user_exist:
                         self._user_service.notify_user_not_found(run)
                         self._logger.info("[%s] User not found.", run)
+                        self._user_data.remove(run)
                         continue
 
                     self._logger.info(
@@ -43,8 +44,7 @@ class ScrapperService:
                         "[%s] Success extraction, sending to spl-users.", run
                     )
                     self._user_service.send_user(run, user_information)
-
-                self._user_data = []
+                    self._user_data.remove(run)
 
             except Exception as error:
                 self.handle_error(error, self._current_user)
