@@ -1,10 +1,13 @@
 import requests
+import logging
+import json
 
 
 class UserService:
     def __init__(self, config: dict[str, str]):
         self._base_url: str = config["SPL_USERS_BASE_URL"]
         self._token: str = config["SPL_USERS_TOKEN"]
+        self._logger = logging.getLogger(self.__class__.__name__)
 
     def get_random_users(self) -> list[str]:
         response = requests.get(
@@ -46,4 +49,5 @@ class UserService:
         )
 
         if response.status_code != 200:
+            self._logger.error("[%s] Request payload: %s", run, json.dumps(payload))
             response.raise_for_status()
