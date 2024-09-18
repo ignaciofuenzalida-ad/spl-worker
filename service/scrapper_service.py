@@ -17,7 +17,7 @@ class ScrapperService:
         self._current_user = None
 
     def start(self):
-        self._user_data = ["22141732-1"]  # test
+        # self._user_data = ["22141732-1"]  # test
 
         while True:
             try:
